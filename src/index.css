@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main{
+  margin:5,5,5,5;
+}
+
+.questionTitle{
+  color: #150a7a;
+  margin-top:60px;
+}
+
+.alternatives{
+  margin-left: 20px;
+  margin-bottom: 40px;
+  padding: 10px;
+  display:inline;
+  border:  1px solid grey;
+  border-radius: 5px;
+  color: rgb(103, 103, 176);
+}

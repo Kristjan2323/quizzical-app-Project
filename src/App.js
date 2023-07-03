@@ -20,26 +20,42 @@ export default function App() {
       console.log(questions); // Log the updated value of questions
     }, [questions]);
   
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
+    function decodeHTML(html) {
+      const parser = new DOMParser();
+      const decodedString = parser.parseFromString(html, 'text/html').body.textContent;
+      return decodedString;
     }
 
+    function shuffleArray(array) {
+      const alternativesArray = []
+      for (let i = array.length - 1; i >= 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+        alternativesArray.push(array[i])
+      }
+      return alternativesArray
+    }
 
+  
 
    function QuestionModel(questionData){
 
     const randomQuestion = questionData.results.map(result => {
       const allAnswers = [...result.incorrect_answers, result.correct_answer];
-      shuffleArray(allAnswers);
+    const allAlternativesInArray =  shuffleArray(allAnswers);
+
+      const decodedQuestion = decodeHTML(result.question);
+    const decodedIncorrectAnswers = result.incorrect_answers.map(answer => decodeHTML(answer));
+    const decodedCorrectAnswer = decodeHTML(result.correct_answer);
+    const decodeAllAnswers = decodeHTML(allAnswers)
+
       return{
         id: nanoid(),
-        questionTitle: result.question,
-        wrongAnswers : result.incorrect_answers ,
-        rightAnswers : result.correct_answer,
-        allAnswers : allAnswers
+        isSelected : false,
+        questionTitle: decodedQuestion,
+        wrongAnswers : decodedIncorrectAnswers ,
+        rightAnswers :decodedCorrectAnswer,
+        allAnswers : allAlternativesInArray
       };
     
     });
