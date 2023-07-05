@@ -29,4 +29,20 @@ code {
   border:  1px solid grey;
   border-radius: 5px;
   color: rgb(103, 103, 176);
+  cursor: pointer;
+
+}
+
+.btnCheckAnswers{
+  margin-top: 40px;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(80, 43, 216);
+  border: none;
+  cursor:pointer
+}
+
+.btnCheckAnswers:active{
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
