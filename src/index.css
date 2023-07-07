@@ -35,6 +35,7 @@ code {
 
 .btnCheckAnswers{
   margin-top: 40px;
+  margin-bottom: 40px;
   color: white;
   padding: 10px;
   border-radius: 5px;
@@ -44,5 +45,51 @@ code {
 }
 
 .btnCheckAnswers:active{
+  box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.btnAndLabel{
+  display:flex;
+  justify-content: center;
+  
+}
+
+.validationAlternativesChecked{
+color: rgb(80, 43, 216);
+margin-right: 20px;
+margin-top: 45px;
+
+}
+
+
+.mainPage{
+  padding: 250px;
+}
+
+.quizzicalTitle{
+  color :rgb(80, 43, 216);
+  font-size: 40px;
+  margin: 10px;
+}
+
+.quizDescription{
+  font-style:italic ;
+  margin-top: 0;
+}
+
+.btnStartQuizz{
+  margin-top: 10px;
+  padding: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  color: aliceblue;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(80, 43, 216);
+}
+
+.btnStartQuizz:active{
   box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
 }
