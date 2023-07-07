@@ -230,7 +230,7 @@ export default function App() {
           {allQuestionsAreChecked &&
             "You scored " + quizzSatistics + " correct answers"}
         </h3>
-        {quizzStarted && questions.length===5 && 
+        {quizzStarted && 
         <button
           className="btnCheckAnswers"
           onClick={handleAnswers}
