@@ -10,7 +10,7 @@ export default function App() {
   const [allQuestionsAreChecked, setAllQuestionChecked] = React.useState(false);
   const [quizzSatistics, setQuizzSatistics] = React.useState("");
   const [quizzStarted,setQuizzStatus] = React.useState(false)
-
+  const [isLoading,setLoading] = React.useState(false)
   function GetAllQuestionData() {
     React.useEffect(() => {
       GetQuestionData();
@@ -100,11 +100,13 @@ export default function App() {
   }
 
   function GetQuestionData() {
+    setLoading(true)
     fetch("https://opentdb.com/api.php?amount=5&type=multiple")
       .then((response) => response.json())
       .then((data) => {
         const questionModel = QuestionModel(data);
         setQuestion(questionModel);
+        setLoading(false)
       });
   }
 
@@ -216,6 +218,11 @@ export default function App() {
 
   return (
     <main>
+      {isLoading?   (
+        <div className="loading-indicator">
+          <div className="spinner" />
+        </div>
+      ) : (
     <div className="App">
       {quizzStarted ? questionElement : quizStartedPage }
       <span className="btnAndLabel">
@@ -223,7 +230,7 @@ export default function App() {
           {allQuestionsAreChecked &&
             "You scored " + quizzSatistics + " correct answers"}
         </h3>
-        {quizzStarted &&
+        {quizzStarted && questions.length===5 && 
         <button
           className="btnCheckAnswers"
           onClick={handleAnswers}
@@ -236,6 +243,8 @@ export default function App() {
 }
       </span>
     </div>
+      )
+}
     </main>
   );
 }
