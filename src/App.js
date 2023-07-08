@@ -11,6 +11,8 @@ export default function App() {
   const [quizzSatistics, setQuizzSatistics] = React.useState("");
   const [quizzStarted,setQuizzStatus] = React.useState(false)
   const [isLoading,setLoading] = React.useState(false)
+  const [isButtonCheckAllAnswerCliked, setButtonCheckAllAnswerCliked] = React.useState(false)
+  
   function GetAllQuestionData() {
     React.useEffect(() => {
       GetQuestionData();
@@ -18,6 +20,18 @@ export default function App() {
     }, []);
   } 
   // Rest of your component code...
+
+  function GetQuestionData() {
+    setLoading(true)
+    setButtonCheckAllAnswerCliked(false)
+    fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+      .then((response) => response.json())
+      .then((data) => {
+        const questionModel = QuestionModel(data);
+        setQuestion(questionModel);
+        setLoading(false)
+      });
+  }
 
   React.useEffect(() => {
     console.log(questions); // Log the updated value of questions
@@ -76,6 +90,7 @@ export default function App() {
   }
 
   function handleSelectedAlternative(selectedAlternativeId, questionId) {
+    setButtonCheckAllAnswerCliked(false)
     setQuestion((questions) =>
       questions?.map((question) => {
         return {
@@ -99,16 +114,7 @@ export default function App() {
     );
   }
 
-  function GetQuestionData() {
-    setLoading(true)
-    fetch("https://opentdb.com/api.php?amount=5&type=multiple")
-      .then((response) => response.json())
-      .then((data) => {
-        const questionModel = QuestionModel(data);
-        setQuestion(questionModel);
-        setLoading(false)
-      });
-  }
+
 
   function getAllSelectedAlternatives() {
     const selectedAlternatives = questions.map((question) =>
@@ -139,6 +145,7 @@ export default function App() {
  }
   //button click
   function handleAnswers() {
+    setButtonCheckAllAnswerCliked(true)
     if (allQuestionsAreChecked) {
       setQuestion([])
       setAllQuestionChecked(false);
@@ -153,7 +160,7 @@ export default function App() {
       const selectedAlternatives = getOnlySelectedAlternatives();
 
       const rightAnswers = GetAllRightAnswersFromQuestions();
-      for (let i = 0; i < rightAnswers.length; i++) {
+      for (let i = 0; i < selectedAlternatives.length; i++) {
         if (selectedAlternatives[i] === rightAnswers[i]) {
           correctAnswers += 1;
         } else {
@@ -226,9 +233,9 @@ export default function App() {
     <div className="App">
       {quizzStarted ? questionElement : quizStartedPage }
       <span className="btnAndLabel">
-        <h3 className="validationAlternativesChecked">
-          {allQuestionsAreChecked &&
-            "You scored " + quizzSatistics + " correct answers"}
+        <h3 className={`validationAlternativesChecked ${!allQuestionsAreChecked && "redText"}`}>
+          {isButtonCheckAllAnswerCliked && ( allQuestionsAreChecked ?
+           ( "You scored " + quizzSatistics + " correct answers"):"Please select one question for each alternative!")}
         </h3>
         {quizzStarted && 
         <button

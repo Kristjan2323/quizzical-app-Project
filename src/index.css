@@ -115,3 +115,7 @@ margin-top: 45px;
     transform: rotate(360deg);
   }
 }
+
+.redText {
+  color: red;
+}
